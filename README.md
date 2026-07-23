@@ -26,7 +26,7 @@
 
 ---
 
-## 🏗️ AАрхитектура
+## 🏗️ Aрхитектура
 
 The diagram below illustrates the reference deployment used throughout this documentation.
 
@@ -41,7 +41,7 @@ flowchart TB
 
     LAN["Home Network"]
 
-    NAS["Synology NAS"]
+    NAS["NAS"]
 
     PC["Windows PC"]
 
