@@ -26,28 +26,39 @@
 
 ---
 
-# 🏗 Архитектура
+## 🏗️ AАрхитектура
+
+The diagram below illustrates the reference deployment used throughout this documentation.
 
 ```mermaid
-graph LR
+flowchart TB
 
-PC["💻 Windows"]
-IOS["📱 iPhone"]
-CUDY["📡 Cudy / OpenWrt"]
+    Internet((Internet))
 
-PC --> VPS
-IOS --> VPS
-CUDY --> VPS
+    VPS["VPS<br/>Ubuntu 24.04 LTS<br/>AmneziaWG Server"]
 
-VPS["☁️ Ubuntu VPS<br/>AmneziaWG"]
+    Router["Cudy WR3000S<br/>OpenWrt<br/>AmneziaWG Client"]
 
-VPS --> PANEL["🌐 Web Panel"]
+    LAN["Home Network"]
 
-CUDY --> PODKOP["Podkop"]
+    NAS["Synology NAS"]
 
-PODKOP --> SPLIT["Split Routing"]
+    PC["Windows PC"]
 
-SPLIT --> VPS
+    Mobile["iPhone / Android"]
+
+    TV["Smart TV"]
+
+    Internet --> VPS
+
+    VPS <-->|Encrypted Tunnel| Router
+
+    Router --> LAN
+
+    LAN --> NAS
+    LAN --> PC
+    LAN --> Mobile
+    LAN --> TV
 ```
 
 ---
