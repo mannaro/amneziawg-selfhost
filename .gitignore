@@ -1,0 +1,36 @@
+# Private keys and client configurations
+*.conf
+!*.example.conf
+*.key
+*.pem
+*.p12
+*.pfx
+
+# Backups and databases
+*.tar
+*.tar.gz
+*.tgz
+*.zip
+*.db
+*.sqlite
+*.sqlite3
+*.bak
+
+# Secrets and environment files
+.env
+.env.*
+secrets/
+private/
+backups/
+clients/
+
+# Generated route lists
+split-allowed-ips.txt
+ip-list.json
+
+# Editors and operating systems
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*Zone.Identifier
