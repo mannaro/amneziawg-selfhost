@@ -47,23 +47,25 @@ SPLIT --> VPS
 
 ---
 
-# 📚 Документация
+## 📚 Документация
 
 Начните с ознакомления с историей проекта:
-- 📖 `docs/00-project-history.md` — почему появился этот проект и какие задачи он решает.
-| Раздел | Статус |
-|---------|--------|
-| ✅ Подготовка VPS | Готово |
-| ✅ Установка AmneziaWG | Готово |
-| ⏳ Web Panel | В работе |
-| ⏳ Firewall | В работе |
-| ⏳ Split Routing | В работе |
-| ⏳ Windows | В работе |
-| ⏳ iPhone | В работе |
-| ⏳ OpenWrt (Cudy) | В работе |
-| ⏳ Podkop | В работе |
-| ⏳ Backup & Restore | В работе |
-| ⏳ Troubleshooting | В работе |
+
+- 📖 **[История проекта](docs/00-project-history.md)** — почему появился этот проект и какие задачи он решает.
+
+### Основные главы
+
+- ✅ [01. Подготовка VPS](docs/01-vps-preparation.md)
+- ✅ [02. Установка AmneziaWG](docs/02-amneziawg-installation.md)
+- 🚧 03. Web Panel
+- 🚧 04. Firewall
+- 🚧 05. Split Routing
+- 🚧 06. Windows Client
+- 🚧 07. iPhone Client
+- 🚧 08. OpenWrt (Cudy)
+- 🚧 09. Podkop
+- 🚧 10. Backup & Restore
+- 🚧 11. Troubleshooting
 
 ---
 
