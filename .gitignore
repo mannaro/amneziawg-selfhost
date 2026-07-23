@@ -1,5 +1,6 @@
 # Private keys and client configurations
 *.conf
+!configs/*.example.conf
 !*.example.conf
 *.key
 *.pem
@@ -34,3 +35,34 @@ ip-list.json
 .DS_Store
 Thumbs.db
 *Zone.Identifier
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Python
+__pycache__/
+
+# Logs
+*.log
+
+# Temporary
+*.tmp
+
+# Backup
+*.bak
+
+# VPN
+*.conf
+*.tar.gz
+
+# Secrets
+*.key
+*.pem
+*.p12
