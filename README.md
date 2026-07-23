@@ -62,15 +62,15 @@ SPLIT --> VPS
 
 - ✅ [01. Подготовка VPS](docs/01-vps-preparation.md)
 - ✅ [02. Установка AmneziaWG](docs/02-amneziawg-installation.md)
-- 🚧 03. Web Panel
-- 🚧 04. Firewall
-- 🚧 05. Split Routing
-- 🚧 06. Windows Client
-- 🚧 07. iPhone Client
-- 🚧 08. OpenWrt (Cudy)
-- 🚧 09. Podkop
-- 🚧 10. Backup & Restore
-- 🚧 11. Troubleshooting
+- ✅ [03. Web Panel](docs/03-web-panel.md)
+- 🚧 [04. Firewall](docs/04-firewall.md)
+- 🚧 [05. Split Routing](docs/05-split-routing.md)
+- 🚧 [06. Windows Client](docs/06-client-windows.md)
+- 🚧 [07. iPhone Client](docs/07-client-ios.md)
+- 🚧 [08. OpenWrt (Cudy)](docs/08-cudy-openwrt.md)
+- 🚧 [09. Podkop](docs/09-podkop.md)
+- 🚧 [10. Backup & Restore](docs/10-backup-restore.md)
+- 🚧 [11. Troubleshooting](docs/11-troubleshooting.md)
 
 ---
 
