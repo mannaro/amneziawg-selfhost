@@ -41,7 +41,7 @@ flowchart TB
 
     LAN["Домашняя сеть"]
 
-    NAS["Synology NAS"]
+    NAS["NAS"]
 
     PC["Windows PC"]
 
@@ -74,7 +74,7 @@ flowchart TB
 - ✅ [01. Подготовка VPS](docs/01-vps-preparation.md)
 - ✅ [02. Установка AmneziaWG](docs/02-amneziawg-installation.md)
 - ✅ [03. Web Panel](docs/03-web-panel.md)
-- 🚧 [04. Firewall](docs/04-firewall.md)
+- ✅ [04. Firewall](docs/04-firewall.md)
 - 🚧 [05. Split Routing](docs/05-split-routing.md)
 - 🚧 [06. Windows Client](docs/06-client-windows.md)
 - 🚧 [07. iPhone Client](docs/07-client-ios.md)
