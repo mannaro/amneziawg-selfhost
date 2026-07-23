@@ -1,7 +1,7 @@
 # 🚀 AmneziaWG Self-hosted
 ![Ubuntu](https://img.shields.io/badge/Ubuntu-24.04-E95420?logo=ubuntu&logoColor=white)
 ![OpenWrt](https://img.shields.io/badge/OpenWrt-Compatible-00B5E2)
-![License](https://img.shields.io/github/license/mannaro/amneziawg-selfhost)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 ![GitHub last commit](https://img.shields.io/github/last-commit/mannaro/amneziawg-selfhost)
 ![Documentation](https://img.shields.io/badge/Documentation-In%20Progress-brightgreen)
 
