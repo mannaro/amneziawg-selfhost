@@ -1,4 +1,9 @@
 # 🚀 AmneziaWG Self-hosted
+![Ubuntu](https://img.shields.io/badge/Ubuntu-24.04-E95420?logo=ubuntu&logoColor=white)
+![OpenWrt](https://img.shields.io/badge/OpenWrt-Compatible-00B5E2)
+![License](https://img.shields.io/github/license/mannaro/amneziawg-selfhost)
+![GitHub last commit](https://img.shields.io/github/last-commit/mannaro/amneziawg-selfhost)
+![Documentation](https://img.shields.io/badge/Documentation-In%20Progress-brightgreen)
 
 > Полное руководство по развёртыванию собственного сервера **AmneziaWG** с веб-панелью управления, Split Routing, OpenWrt (Cudy), Podkop и защищённой инфраструктурой.
 
@@ -91,8 +96,15 @@ SPLIT --> VPS
 │   ├── 10-backup-restore.md
 │   └── 11-troubleshooting.md
 │
+├── assets/
+├── diagrams/
+├── examples/
 ├── images/
 ├── scripts/
+├── CHANGELOG.md
+├── CONTRIBUTING.md
+├── SECURITY.md
+├── LICENSE
 └── README.md
 ```
 
