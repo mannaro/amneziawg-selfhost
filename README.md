@@ -1,60 +1,170 @@
-# Self-hosted AmneziaWG with OpenWrt and Podkop
+# 🚀 AmneziaWG Self-hosted
 
-Практическое руководство по развёртыванию собственного сервера AmneziaWG на Ubuntu с веб-панелью, раздельной маршрутизацией, защищённым доступом к панели и подключением клиентов Windows, iOS и OpenWrt.
-
-Документация основана на реально развёрнутой и проверенной конфигурации.
-
-## Возможности
-
-- собственный сервер AmneziaWG на Ubuntu;
-- веб-панель управления клиентами;
-- split tunneling через `AllowedIPs`;
-- доступ к веб-панели только из VPN;
-- клиенты Windows и iOS;
-- роутер Cudy на OpenWrt;
-- маршрутизация выбранных сервисов через Podkop;
-- резервное копирование и восстановление;
-- диагностика типовых неисправностей.
-
-## Схема
-
-```text
-Windows ───────────────┐
-iPhone ────────────────┼── AmneziaWG ── VPS
-                       │
-Cudy / OpenWrt ────────┘
-       │
-       └── Podkop
-             ├── выбранные домены → AmneziaWG
-             └── остальной трафик → напрямую
-
+> Полное руководство по развёртыванию собственного сервера **AmneziaWG** с веб-панелью управления, Split Routing, OpenWrt (Cudy), Podkop и защищённой инфраструктурой.
 
 ---
 
-## Шаг 4. Добавляем лицензию
+## ✨ Возможности
 
-Для открытой инструкции подойдёт MIT:
+- ✅ Собственный VPN-сервер AmneziaWG на Ubuntu
+- ✅ Современная Web Panel для управления клиентами
+- ✅ Split Routing через `AllowedIPs`
+- ✅ Защищённый доступ к Web Panel только из VPN
+- ✅ Клиенты Windows
+- ✅ Клиенты iPhone (iOS)
+- ✅ Подключение OpenWrt (Cudy)
+- ✅ Интеграция с Podkop
+- ✅ Резервное копирование сервера
+- ✅ Восстановление после сбоя
+- ✅ Диагностика типичных проблем
+- ✅ Полностью воспроизводимая установка
 
-```bash
-cat > LICENSE <<'EOF'
-MIT License
+---
 
-Copyright (c) 2026 mannaro
+# 🏗 Архитектура
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files, to deal in the Software
-without restriction, including without limitation the rights to use, copy,
-modify, merge, publish, distribute, sublicense, and/or sell copies of the
-Software, and to permit persons to whom the Software is furnished to do so,
-subject to the following conditions:
+```mermaid
+graph LR
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+PC["💻 Windows"]
+IOS["📱 iPhone"]
+CUDY["📡 Cudy / OpenWrt"]
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+PC --> VPS
+IOS --> VPS
+CUDY --> VPS
+
+VPS["☁️ Ubuntu VPS<br/>AmneziaWG"]
+
+VPS --> PANEL["🌐 Web Panel"]
+
+CUDY --> PODKOP["Podkop"]
+
+PODKOP --> SPLIT["Split Routing"]
+
+SPLIT --> VPS
+```
+
+---
+
+# 📚 Документация
+
+| Раздел | Статус |
+|---------|--------|
+| ✅ Подготовка VPS | Готово |
+| ✅ Установка AmneziaWG | Готово |
+| ⏳ Web Panel | В работе |
+| ⏳ Firewall | В работе |
+| ⏳ Split Routing | В работе |
+| ⏳ Windows | В работе |
+| ⏳ iPhone | В работе |
+| ⏳ OpenWrt (Cudy) | В работе |
+| ⏳ Podkop | В работе |
+| ⏳ Backup & Restore | В работе |
+| ⏳ Troubleshooting | В работе |
+
+---
+
+# 📂 Структура проекта
+
+```
+.
+├── configs/
+│   ├── awg0.example.conf
+│   ├── nftables.example
+│   └── params.example
+│
+├── docs/
+│   ├── 01-vps-preparation.md
+│   ├── 02-amneziawg-installation.md
+│   ├── 03-web-panel.md
+│   ├── 04-firewall.md
+│   ├── 05-split-routing.md
+│   ├── 06-client-windows.md
+│   ├── 07-client-ios.md
+│   ├── 08-cudy-openwrt.md
+│   ├── 09-podkop.md
+│   ├── 10-backup-restore.md
+│   └── 11-troubleshooting.md
+│
+├── images/
+├── scripts/
+└── README.md
+```
+
+---
+
+# 🎯 Цель проекта
+
+Большинство инструкций по AmneziaWG заканчиваются установкой сервера.
+
+Этот проект показывает полный цикл:
+
+- развёртывание VPS;
+- установка AmneziaWG;
+- настройка Web Panel;
+- Split Routing;
+- OpenWrt;
+- Podkop;
+- резервное копирование;
+- восстановление;
+- поиск неисправностей.
+
+Все инструкции основаны на **реально работающей конфигурации**, а не являются переписанными фрагментами официальной документации.
+
+---
+
+# 🔒 Безопасность
+
+В репозиторий **никогда не должны попадать**:
+
+- приватные ключи;
+- реальные клиентские `.conf`;
+- `PrivateKey`;
+- `PresharedKey`;
+- резервные архивы;
+- база данных Web Panel;
+- токены;
+- пароли.
+
+Все примеры в репозитории обезличены.
+
+---
+
+# ⚠️ Требования
+
+Минимальная конфигурация VPS:
+
+- Ubuntu 22.04 LTS или Ubuntu 24.04 LTS
+- 1 vCPU
+- 1 GB RAM
+- 10 GB SSD
+- публичный IPv4
+- SSH-доступ
+
+---
+
+# 🚦 Статус проекта
+
+Проект активно развивается.
+
+На текущий момент полностью проверены:
+
+- VPS
+- AmneziaWG
+- Windows
+- iPhone
+- OpenWrt (Cudy)
+- Podkop
+- Split Routing
+- Backup
+
+В процессе оформления документации.
+
+---
+
+# 📄 Лицензия
+
+Проект распространяется по лицензии **MIT**.
+
+Подробности см. в файле `LICENSE`.
