@@ -26,22 +26,22 @@
 
 ---
 
-## 🏗️ Aрхитектура
+## 🏗️ Архитектура
 
-The diagram below illustrates the reference deployment used throughout this documentation.
+Ниже представлена эталонная схема, используемая в данном руководстве.
 
 ```mermaid
 flowchart TB
 
-    Internet((Internet))
+    Internet((Интернет))
 
     VPS["VPS<br/>Ubuntu 24.04 LTS<br/>AmneziaWG Server"]
 
     Router["Cudy WR3000S<br/>OpenWrt<br/>AmneziaWG Client"]
 
-    LAN["Home Network"]
+    LAN["Домашняя сеть"]
 
-    NAS["NAS"]
+    NAS["Synology NAS"]
 
     PC["Windows PC"]
 
@@ -51,7 +51,7 @@ flowchart TB
 
     Internet --> VPS
 
-    VPS <-->|Encrypted Tunnel| Router
+    VPS <-->|Зашифрованный туннель| Router
 
     Router --> LAN
 
