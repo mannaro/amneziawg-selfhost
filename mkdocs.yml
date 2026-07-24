@@ -49,6 +49,10 @@ theme:
 
   icon:
     repo: fontawesome/brands/github
+    logo: material/shield-lock
+
+extra_css:
+  - stylesheets/extra.css
 
 plugins:
   - search:
@@ -76,10 +80,11 @@ markdown_extensions:
 
   - pymdownx.inlinehilite
 
-  - pymdownx.superfences
-
-  - pymdownx.tasklist:
-      custom_checkbox: true
+  - pymdownx.superfences:
+     custom_fences:
+       - name: mermaid
+         class: mermaid
+         format: !!python/name:pymdownx.superfences.fence_code_format
 
 nav:
   - Главная: index.md
