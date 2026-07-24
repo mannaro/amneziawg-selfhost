@@ -3,11 +3,12 @@ site_description: Полное руководство по развёртыва�
 site_author: mannaro
 site_url: https://mannaro.github.io/amneziawg-selfhost/
 
+
 repo_name: mannaro/amneziawg-selfhost
 repo_url: https://github.com/mannaro/amneziawg-selfhost
 edit_uri: edit/main/docs/
 
-copyright: Copyright &copy; 2026 mannaro
+copyright: Copyright &copy; 2026 Mannaro
 
 theme:
   name: material
@@ -48,8 +49,9 @@ theme:
         name: Включить светлую тему
 
   icon:
-    repo: fontawesome/brands/github
     logo: material/shield-lock
+    repo: fontawesome/brands/github
+
 
 extra_css:
   - stylesheets/extra.css
