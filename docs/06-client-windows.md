@@ -341,6 +341,98 @@ net.ipv4.ip_forward = 1
 
 ---
 
+## Подготовка списка AllowedIPs
+
+Для выборочной маршрутизации Windows-клиенту требуется список IP-адресов и подсетей.
+
+Сформировать исходный список можно на странице:
+
+[IP Address Collection and Management Service](https://iplist.opencck.org/ru/)
+
+После загрузки файла рекомендуется проверить его содержимое:
+
+```bash
+head -n 20 networks.txt
+```
+
+Удалить пустые строки:
+
+```bash
+sed '/^[[:space:]]*$/d' networks.txt > networks-clean.txt
+```
+
+Удалить повторяющиеся записи:
+
+```bash
+sort -u networks-clean.txt > networks-unique.txt
+```
+
+Объединить подсети в строку для `AllowedIPs`:
+
+```bash
+paste -sd, networks-unique.txt | sed 's/,/, /g' > allowedips.txt
+```
+
+Проверить результат:
+
+```bash
+batcat allowedips.txt
+```
+
+Полученную строку вставьте в клиентскую конфигурацию:
+
+```ini
+[Peer]
+PublicKey = SERVER_PUBLIC_KEY
+PresharedKey = CLIENT_PRESHARED_KEY
+Endpoint = SERVER_IP:SERVER_PORT
+AllowedIPs = NETWORK_1, NETWORK_2, NETWORK_3
+PersistentKeepalive = 25
+```
+
+После сохранения конфигурации переподключите туннель.
+
+---
+
+## Проверка выборочной маршрутизации
+
+После подключения убедитесь, что маршрут для выбранного IP проходит через VPN:
+
+```powershell
+route print
+```
+
+Для проверки конкретного адреса можно использовать:
+
+```powershell
+tracert TARGET_IP
+```
+
+Также сравните внешний IP:
+
+1. при обращении к ресурсу из списка;
+2. при обращении к обычному ресурсу, который не включён в `AllowedIPs`.
+
+Ожидаемое поведение:
+
+- выбранный трафик проходит через VPS;
+- остальной трафик использует обычное интернет-подключение;
+- локальная сеть остаётся доступной.
+
+!!! warning "Не используйте 0.0.0.0/0 для выборочного режима"
+
+    Значение:
+
+    ```ini
+    AllowedIPs = 0.0.0.0/0
+    ```
+
+    отправляет через туннель весь IPv4-трафик.
+
+    Для Split Routing указываются только необходимые адреса и подсети.
+
+---
+
 # Итоги
 
 После выполнения всех шагов у вас должен быть полностью работоспособный клиент AmneziaWG для Windows.

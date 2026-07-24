@@ -1,3 +1,8 @@
+---
+title: AmneziaWG Self-Hosted
+description: Полное русскоязычное руководство по нативному AmneziaWG 2.0, OpenWrt, Podkop, sing-box, nftables и Split Routing.
+---
+
 <div class="hero">
 
   <div class="hero-kicker">
@@ -103,6 +108,14 @@ Firewall, NAT и ограничение доступа к Web Panel средст
 </div>
 
 </div>
+
+!!! tip "Списки адресов для Split Routing"
+
+    Для формирования исходного списка IP-адресов в проекте использовался сервис
+    [iplist.opencck.org](https://iplist.opencck.org/ru/).
+
+    Подробный порядок подготовки и преобразования списка описан в главе
+    [Split Routing](05-split-routing.md).
 
 ## Архитектура проекта
 
