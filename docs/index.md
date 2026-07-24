@@ -38,7 +38,9 @@ description: Полное русскоязычное руководство по
 
     <a
       class="hero-button"
-      href="https://github.com/mannaro/amneziawg-selfhost"
+      href="https://github.com/mannaro/amneziawg-selfhost/tree/main"
+      target="_blank"
+      rel="noopener noreferrer"
     >
       <span aria-hidden="true">◉</span>
       <span>Открыть GitHub</span>
