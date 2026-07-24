@@ -1,13 +1,23 @@
-# Private keys and client configurations
+# VPN client and server configurations
 *.conf
 !configs/*.example.conf
 !*.example.conf
+
+# Private keys and certificates
 *.key
 *.pem
 *.p12
 *.pfx
 
+# Secrets and environment files
+.env
+.env.*
+secrets/
+private/
+clients/
+
 # Backups and databases
+backups/
 *.tar
 *.tar.gz
 *.tgz
@@ -17,52 +27,25 @@
 *.sqlite3
 *.bak
 
-# Secrets and environment files
-.env
-.env.*
-secrets/
-private/
-backups/
-clients/
-
-# Generated route lists
+# Generated routing data
 split-allowed-ips.txt
 ip-list.json
 
-# Editors and operating systems
+# Logs and temporary files
+*.log
+*.tmp
+*.swp
+*~
+
+# Editors
 .vscode/
 .idea/
+
+# Operating systems
 .DS_Store
 Thumbs.db
 *Zone.Identifier
 
-# macOS
-.DS_Store
-
-# Windows
-Thumbs.db
-
-# IDE
-.vscode/
-.idea/
-
 # Python
 __pycache__/
-
-# Logs
-*.log
-
-# Temporary
-*.tmp
-
-# Backup
-*.bak
-
-# VPN
-*.conf
-*.tar.gz
-
-# Secrets
-*.key
-*.pem
-*.p12
+*.py[cod]
