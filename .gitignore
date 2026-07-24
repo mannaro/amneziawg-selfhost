@@ -49,3 +49,9 @@ Thumbs.db
 # Python
 __pycache__/
 *.py[cod]
+
+# MkDocs build output
+site/
+
+# Python virtual environment
+.venv/
