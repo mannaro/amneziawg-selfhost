@@ -1,93 +1,216 @@
-# 🚀 AmneziaWG Self-hosted
-![Ubuntu](https://img.shields.io/badge/Ubuntu-24.04-E95420?logo=ubuntu&logoColor=white)
-![OpenWrt](https://img.shields.io/badge/OpenWrt-Compatible-00B5E2)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-![GitHub last commit](https://img.shields.io/github/last-commit/mannaro/amneziawg-selfhost)
-![Documentation](https://img.shields.io/badge/Documentation-In%20Progress-brightgreen)
+# 🚀 AmneziaWG Self-Hosted
 
-> Полное руководство по развёртыванию собственного сервера **AmneziaWG** с веб-панелью управления, Split Routing, OpenWrt (Cudy), Podkop и защищённой инфраструктурой.
+[![Ubuntu](https://img.shields.io/badge/Ubuntu-24.04-E95420?logo=ubuntu&logoColor=white)](https://ubuntu.com/)
+[![OpenWrt](https://img.shields.io/badge/OpenWrt-Compatible-00B5E2?logo=openwrt&logoColor=white)](https://openwrt.org/)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Documentation](https://img.shields.io/badge/Documentation-Complete-brightgreen)](docs/)
+[![Status](https://img.shields.io/badge/Status-Working-success)](#-статус-проекта)
+
+Полное русскоязычное руководство по развёртыванию собственного сервера **AmneziaWG** с веб-панелью управления, защищённым доступом, Split Routing, OpenWrt, Podkop и резервным копированием.
+
+Документация основана на реально работающей конфигурации:
+
+- VPS с Ubuntu 24.04 LTS;
+- AmneziaWG Server;
+- nftables;
+- Windows и iOS-клиенты;
+- Cudy WR3000S с OpenWrt;
+- Podkop;
+- sing-box;
+- TPROXY;
+- Policy Routing.
+
+> [!IMPORTANT]
+> Репозиторий содержит только обезличенные примеры. Приватные ключи, клиентские конфигурации, токены, пароли и резервные архивы публиковать нельзя.
 
 ---
 
 ## ✨ Возможности
 
 - ✅ Собственный VPN-сервер AmneziaWG на Ubuntu
-- ✅ Современная Web Panel для управления клиентами
-- ✅ Split Routing через `AllowedIPs`
-- ✅ Защищённый доступ к Web Panel только из VPN
-- ✅ Клиенты Windows
-- ✅ Клиенты iPhone (iOS)
-- ✅ Подключение OpenWrt (Cudy)
+- ✅ Веб-панель для управления клиентами
+- ✅ Доступ к панели только из VPN-сети
+- ✅ Фильтрация и NAT средствами nftables
+- ✅ Split Routing для Windows
+- ✅ Клиенты Windows и iPhone
+- ✅ Подключение OpenWrt-роутера
 - ✅ Интеграция с Podkop
-- ✅ Резервное копирование сервера
-- ✅ Восстановление после сбоя
-- ✅ Диагностика типичных проблем
-- ✅ Полностью воспроизводимая установка
+- ✅ Маршрутизация через sing-box и TPROXY
+- ✅ Policy Routing с отдельной таблицей маршрутизации
+- ✅ Резервное копирование и восстановление
+- ✅ Практическая диагностика неисправностей
 
 ---
 
 ## 🏗️ Архитектура
 
-Ниже представлена эталонная схема, используемая в данном руководстве.
-
 ```mermaid
 flowchart TB
-
     Internet((Интернет))
 
-    VPS["VPS<br/>Ubuntu 24.04 LTS<br/>AmneziaWG Server"]
+    VPS["VPS<br/>Ubuntu 24.04 LTS<br/>AmneziaWG Server<br/>nftables + NAT"]
+
+    Tunnel["Зашифрованный туннель<br/>AmneziaWG"]
 
     Router["Cudy WR3000S<br/>OpenWrt<br/>AmneziaWG Client"]
+
+    Routing["Podkop<br/>nftables + fwmark<br/>Policy Routing<br/>TPROXY + sing-box"]
 
     LAN["Домашняя сеть"]
 
     NAS["NAS"]
-
     PC["Windows PC"]
-
-    Mobile["iPhone / Android"]
-
+    Phone["iPhone / Android"]
     TV["Smart TV"]
 
-    Internet --> VPS
-
-    VPS <-->|Зашифрованный туннель| Router
-
-    Router --> LAN
+    Internet <--> VPS
+    VPS <--> Tunnel
+    Tunnel <--> Router
+    Router --> Routing
+    Routing --> LAN
 
     LAN --> NAS
     LAN --> PC
-    LAN --> Mobile
+    LAN --> Phone
     LAN --> TV
 ```
+
+### Путь трафика через VPN
+
+```text
+Клиентское устройство
+        ↓
+Cudy OpenWrt
+        ↓
+Podkop
+        ↓
+nftables: fwmark 0x100000
+        ↓
+Policy Routing: table podkop
+        ↓
+TPROXY
+        ↓
+sing-box: 127.0.0.1:1602
+        ↓
+AmneziaWG: awg0
+        ↓
+VPS
+        ↓
+NAT / Masquerade
+        ↓
+Интернет
+```
+
+> [!NOTE]
+> Split Routing реализуется на стороне клиентов. VPS принимает уже выбранный трафик, выполняет маршрутизацию и NAT, но не определяет, какие сайты должны использовать VPN.
+
+---
+
+## ⚡ Быстрый старт
+
+Последовательно пройдите основные главы:
+
+1. [Подготовьте VPS](docs/01-vps-preparation.md).
+2. [Установите AmneziaWG](docs/02-amneziawg-installation.md).
+3. [Настройте веб-панель](docs/03-web-panel.md).
+4. [Настройте firewall и NAT](docs/04-firewall.md).
+5. [Выберите схему Split Routing](docs/05-split-routing.md).
+6. Подключите необходимое устройство:
+   - [Windows](docs/06-client-windows.md);
+   - [iPhone](docs/07-client-ios.md);
+   - [Cudy с OpenWrt](docs/08-cudy-openwrt.md).
+7. [Настройте Podkop и выборочную маршрутизацию](docs/09-podkop.md).
+8. [Создайте резервные копии](docs/10-backup-restore.md).
+9. При проблемах используйте [руководство по диагностике](docs/11-troubleshooting.md).
+
+> [!TIP]
+> Не переходите к Podkop, пока интерфейс `awg0` на OpenWrt не поднимается автоматически и не показывает свежий Handshake.
 
 ---
 
 ## 📚 Документация
 
-Начните с ознакомления с историей проекта:
+### История и контекст
 
-- 📖 **[История проекта](docs/00-project-history.md)** — почему появился этот проект и какие задачи он решает.
+- ✅ [00. История проекта](docs/00-project-history.md) — задачи проекта, принятые решения и итоговая архитектура.
 
-### Основные главы
+### Сервер
 
 - ✅ [01. Подготовка VPS](docs/01-vps-preparation.md)
 - ✅ [02. Установка AmneziaWG](docs/02-amneziawg-installation.md)
 - ✅ [03. Web Panel](docs/03-web-panel.md)
 - ✅ [04. Firewall](docs/04-firewall.md)
-- 🚧 [05. Split Routing](docs/05-split-routing.md)
-- 🚧 [06. Windows Client](docs/06-client-windows.md)
-- 🚧 [07. iPhone Client](docs/07-client-ios.md)
-- 🚧 [08. OpenWrt (Cudy)](docs/08-cudy-openwrt.md)
-- 🚧 [09. Podkop](docs/09-podkop.md)
-- 🚧 [10. Backup & Restore](docs/10-backup-restore.md)
-- 🚧 [11. Troubleshooting](docs/11-troubleshooting.md)
+
+### Маршрутизация и клиенты
+
+- ✅ [05. Split Routing](docs/05-split-routing.md)
+- ✅ [06. Клиент Windows](docs/06-client-windows.md)
+- ✅ [07. Клиент iPhone](docs/07-client-ios.md)
+- ✅ [08. OpenWrt на Cudy](docs/08-cudy-openwrt.md)
+- ✅ [09. Podkop и выборочная маршрутизация](docs/09-podkop.md)
+
+### Эксплуатация
+
+- ✅ [10. Резервное копирование и восстановление](docs/10-backup-restore.md)
+- ✅ [11. Диагностика и устранение неисправностей](docs/11-troubleshooting.md)
 
 ---
 
-# 📂 Структура проекта
+## 🧰 Используемые технологии
 
+| Компонент | Назначение |
+|---|---|
+| Ubuntu 24.04 LTS | Операционная система VPS |
+| AmneziaWG | VPN-сервер и VPN-клиенты |
+| nftables | Firewall, фильтрация, NAT и маркировка |
+| OpenWrt | Операционная система маршрутизатора |
+| Cudy WR3000S | Домашний VPN-шлюз |
+| Podkop | Выборочная маршрутизация |
+| sing-box | Обработка перенаправленного трафика |
+| TPROXY | Прозрачный перехват TCP/UDP |
+| Policy Routing | Маршрутизация пакетов по `fwmark` |
+| Git | Версионирование документации и примеров |
+
+---
+
+## 🔍 Проверенная конфигурация
+
+В рабочей конфигурации используются следующие параметры:
+
+```text
+VPN-интерфейс сервера: awg0
+VPN-сеть:              10.66.66.0/24
+VPN-адрес сервера:     10.66.66.1
+UDP-порт сервера:      53925
+Web Panel:             10.66.66.1:8080
+OpenWrt-клиент:        10.66.66.4/32
+Policy fwmark:         0x100000
+Routing table:         podkop
+sing-box TPROXY:       127.0.0.1:1602
 ```
+
+Примеры ожидаемой диагностики:
+
+```text
+105: from all fwmark 0x100000 lookup podkop
+```
+
+```text
+local default dev lo scope host
+```
+
+```text
+/usr/bin/sing-box run -c /etc/sing-box/config.json
+```
+
+> [!WARNING]
+> Эти адреса и порты относятся к конфигурации, описанной в руководстве. При собственной установке они могут отличаться.
+
+---
+
+## 📁 Структура проекта
+
+```text
 .
 ├── configs/
 │   ├── awg0.example.conf
@@ -95,6 +218,7 @@ flowchart TB
 │   └── params.example
 │
 ├── docs/
+│   ├── 00-project-history.md
 │   ├── 01-vps-preparation.md
 │   ├── 02-amneziawg-installation.md
 │   ├── 03-web-panel.md
@@ -118,89 +242,128 @@ flowchart TB
 ├── LICENSE
 └── README.md
 ```
----
 
-## 🤝 Для авторов
-
-Если вы хотите дополнить проект новой главой или улучшить существующую документацию:
-
-- 📄 Используйте единый шаблон: [TEMPLATE.md](docs/TEMPLATE.md)
-- 📘 Ознакомьтесь с правилами: [CONTRIBUTING.md](CONTRIBUTING.md)
-- 🔒 Перед публикацией проверьте рекомендации по безопасности: [SECURITY.md](SECURITY.md)
+> [!NOTE]
+> Некоторые каталоги могут оставаться пустыми до добавления схем, скриншотов, автоматизации и дополнительных примеров.
 
 ---
 
-# 🎯 Цель проекта
+## 🔐 Безопасность
 
-Большинство инструкций по AmneziaWG заканчиваются установкой сервера.
+В публичный репозиторий нельзя добавлять:
 
-Этот проект показывает полный цикл:
-
-- развёртывание VPS;
-- установка AmneziaWG;
-- настройка Web Panel;
-- Split Routing;
-- OpenWrt;
-- Podkop;
-- резервное копирование;
-- восстановление;
-- поиск неисправностей.
-
-Все инструкции основаны на **реально работающей конфигурации**, а не являются переписанными фрагментами официальной документации.
-
----
-
-# 🔒 Безопасность
-
-В репозиторий **никогда не должны попадать**:
-
-- приватные ключи;
-- реальные клиентские `.conf`;
 - `PrivateKey`;
 - `PresharedKey`;
+- реальные клиентские `.conf`;
+- QR-коды клиентов;
+- токены и пароли;
+- базу данных веб-панели;
 - резервные архивы;
-- база данных Web Panel;
-- токены;
-- пароли.
+- приватные IP-адреса административной инфраструктуры;
+- SSH-ключи;
+- файлы с переменными окружения.
 
-Все примеры в репозитории обезличены.
+Перед каждым коммитом рекомендуется выполнять:
 
----
+```bash
+git diff --cached
+```
 
-# ⚠️ Требования
+Поиск потенциально опасных данных:
 
-Минимальная конфигурация VPS:
+```bash
+grep -RniE \
+  'PrivateKey|PresharedKey|password|passwd|token|secret|BEGIN (RSA|OPENSSH|EC) PRIVATE KEY' \
+  . \
+  --exclude-dir=.git
+```
 
-- Ubuntu 22.04 LTS или Ubuntu 24.04 LTS
-- 1 vCPU
-- 1 GB RAM
-- 10 GB SSD
-- публичный IPv4
-- SSH-доступ
-
----
-
-# 🚦 Статус проекта
-
-Проект активно развивается.
-
-На текущий момент полностью проверены:
-
-- VPS
-- AmneziaWG
-- Windows
-- iPhone
-- OpenWrt (Cudy)
-- Podkop
-- Split Routing
-- Backup
-
-В процессе оформления документации.
+Подробнее: [SECURITY.md](SECURITY.md).
 
 ---
 
-# 📄 Лицензия
+## ✅ Требования
 
-Проект распространяется по лицензии **MIT**.
+Минимальная рекомендуемая конфигурация VPS:
 
-Подробности см. в файле `LICENSE`.
+- Ubuntu 22.04 LTS или Ubuntu 24.04 LTS;
+- 1 vCPU;
+- 1 GB RAM;
+- 10 GB SSD;
+- публичный IPv4;
+- SSH-доступ;
+- разрешённый входящий UDP-порт.
+
+Для OpenWrt-сценария также потребуется:
+
+- совместимый маршрутизатор;
+- доступ по SSH;
+- достаточно свободной flash-памяти;
+- поддержка AmneziaWG;
+- возможность установки Podkop и sing-box.
+
+---
+
+## 🚦 Статус проекта
+
+Проект находится в рабочем состоянии.
+
+Проверены:
+
+- ✅ развёртывание VPS;
+- ✅ установка AmneziaWG;
+- ✅ работа Web Panel;
+- ✅ firewall и NAT;
+- ✅ Windows-клиент;
+- ✅ iPhone-клиент;
+- ✅ Cudy WR3000S с OpenWrt;
+- ✅ Podkop;
+- ✅ sing-box;
+- ✅ Split Routing;
+- ✅ резервное копирование;
+- ✅ базовая диагностика.
+
+Документация завершена, но может дополняться новыми примерами, скриншотами и вариантами конфигурации.
+
+---
+
+## 🤝 Участие в проекте
+
+Исправления, дополнения и новые практические сценарии приветствуются.
+
+Перед отправкой изменений:
+
+1. изучите [CONTRIBUTING.md](CONTRIBUTING.md);
+2. проверьте отсутствие секретов;
+3. используйте обезличенные примеры;
+4. убедитесь, что все внутренние ссылки работают;
+5. кратко опишите внесённые изменения.
+
+---
+
+## 🎯 Цель проекта
+
+Большинство инструкций по AmneziaWG заканчивается после установки VPN-сервера.
+
+Этот проект описывает полный жизненный цикл:
+
+- подготовку VPS;
+- установку и защиту сервера;
+- управление клиентами;
+- Split Routing;
+- подключение Windows и iOS;
+- интеграцию с OpenWrt;
+- работу Podkop, TPROXY и sing-box;
+- резервное копирование;
+- восстановление;
+- диагностику неисправностей.
+
+Все инструкции основаны на реально работающей конфигурации и сопровождаются проверочными командами.
+
+---
+
+## 📄 Лицензия
+
+Проект распространяется по лицензии MIT.
+
+Подробности находятся в файле [LICENSE](LICENSE).
