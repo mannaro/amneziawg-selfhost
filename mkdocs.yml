@@ -56,6 +56,9 @@ theme:
 extra_css:
   - stylesheets/extra.css
 
+extra_javascript:
+  - javascripts/scroll-toggle.js
+
 plugins:
   - search:
       lang:

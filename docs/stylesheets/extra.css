@@ -468,3 +468,76 @@
     min-width: 26rem;
   }
 }
+
+/* Floating scroll toggle */
+
+.scroll-toggle {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  color: var(--md-primary-bg-color);
+  background-color: var(--md-primary-fg-color);
+  box-shadow:
+    0 0.2rem 0.5rem rgba(0, 0, 0, 0.18),
+    0 0.5rem 1.25rem rgba(0, 0, 0, 0.14);
+  cursor: pointer;
+  z-index: 20;
+  transition:
+    transform 150ms ease,
+    box-shadow 150ms ease,
+    opacity 150ms ease;
+}
+
+.scroll-toggle[hidden] {
+  display: none;
+}
+
+.scroll-toggle svg {
+  width: 1.65rem;
+  height: 1.65rem;
+  fill: currentColor;
+}
+
+.scroll-toggle:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 0.3rem 0.7rem rgba(0, 0, 0, 0.22),
+    0 0.7rem 1.5rem rgba(0, 0, 0, 0.18);
+}
+
+.scroll-toggle:active {
+  transform: scale(0.94);
+}
+
+.scroll-toggle:focus-visible {
+  outline: 0.15rem solid var(--md-accent-fg-color);
+  outline-offset: 0.18rem;
+}
+
+[data-md-color-scheme="slate"] .scroll-toggle {
+  box-shadow:
+    0 0.25rem 0.65rem rgba(0, 0, 0, 0.4),
+    0 0.65rem 1.4rem rgba(0, 0, 0, 0.32);
+}
+
+@media screen and (max-width: 44.984375em) {
+  .scroll-toggle {
+    right: 1rem;
+    bottom: 1rem;
+    width: 2.8rem;
+    height: 2.8rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-toggle {
+    transition: none;
+  }
+}
