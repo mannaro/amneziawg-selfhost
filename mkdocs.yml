@@ -108,7 +108,7 @@ nav:
       - 09. Podkop: 09-podkop.md
 
   - Эксплуатация:
-    - 10. Backup и восстановление: 10-backup.md
+    - 10. Backup и восстановление: 10-backup-restore.md
     - 11. Диагностика: 11-troubleshooting.md
 
   - GitHub:
