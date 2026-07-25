@@ -228,6 +228,12 @@ NAT
 
 [Backup и Restore](10-backup-restore.md) · [Troubleshooting](11-troubleshooting.md)
 
+### 7. Работа с GitHub
+
+Научитесь обновлять репозиторий, переносить проект на новый VPS и безопасно работать с GitHub.
+
+[Репозиторий GitHub](12-repository-workflow.md)
+
 </div>
 
 ## Проверенная конфигурация

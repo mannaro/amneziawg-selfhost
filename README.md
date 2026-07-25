@@ -116,6 +116,7 @@ flowchart TB
 - [Podkop](https://mannaro.github.io/amneziawg-selfhost/09-podkop/)
 - [Резервное копирование](https://mannaro.github.io/amneziawg-selfhost/10-backup-restore/)
 - [Диагностика](https://mannaro.github.io/amneziawg-selfhost/11-troubleshooting/)
+- [Работа с репозиторием](docs/12-repository-workflow.md)
 
 ---
 
