@@ -110,12 +110,9 @@ nav:
   - Эксплуатация:
     - 10. Backup и восстановление: 10-backup-restore.md
     - 11. Диагностика: 11-troubleshooting.md
-
-  - Работа с GitHub:
-    # Руководство
     - 12. Репозиторий: 12-repository-workflow.md
 
-    # Информация о проекте
+  - GitHub:
     - Репозиторий: https://github.com/mannaro/amneziawg-selfhost
     - Безопасность: https://github.com/mannaro/amneziawg-selfhost/security/policy
     - Участие в проекте: https://github.com/mannaro/amneziawg-selfhost/blob/main/CONTRIBUTING.md
